@@ -8,6 +8,7 @@ const app = express()
 const port = 5000
 
 const productRoutes = require("./component/products/productRoutes")
+const orderRoutes = require("./component/orders/orderRoutes")
 const setupDB = require("./config/db")
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -15,6 +16,7 @@ app.use(bodyParser.json())
 
 setupDB();
 app.use('/products', productRoutes)
+app.use('/orders',orderRoutes)
 
 
 app.listen(port, () => {
