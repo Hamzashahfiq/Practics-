@@ -4,103 +4,98 @@ const authUser = require('./AuthModel')
 
 
 const signupUser = async (req, res) => {
-    // console.log(req.body.userName )
-    // if (!req.body.userName || !req.body.password || !req.body.mobileNo) {
-    //     let response = {
-    //         statusCode: 401,
-    //         message: 'params required: userName, password, mobileNo'
-    //     }
-    //     res.json(response);
-    // }
+    if (!req.body.userName || !req.body.password || !req.body.mobileNo) {
+        let responseData = {
+            statusCode: 401,
+            message: 'params required: userName, password, mobileNo'
+        }
+        res.json(responseData);
+    }
 
-    // const saltRounds = 10;
-    // let pass = bcrypt.hash(req.body.password, saltRounds);
-    // console.log(pass)
-    console.log('data')
+    const saltRounds = 10;
+    let pass = await bcrypt.hash(req.body.password, saltRounds);
     let addNewUser = {
-        // name: req.body.userName,
-        // password: req.body.password,
-        // mobileNo: req.body.mobileNo,
-        // createdAt: new Date(),
-        name: 'hamza',
-        password: '123',
-        mobileNo: '03020000111',
+        name: req.body.userName,
+        password: pass,
+        mobileNo: req.body.mobileNo,
         createdAt: new Date(),
     }
 
     const newUser = new authUser(addNewUser)
 
     try {
-        console.log('data2')
         await newUser.save()
-        console.log('data3')
-        let response = {
+        let responseData = {
             statusCode: 200,
             message: 'user added successfully'
         }
-        res.json(response);
+        res.json(responseData);
     }
     catch (error) {
-        let response = {
+        let responseData = {
             statusCode: 400,
             message: error
         }
-        res.json(response);
+        res.json(responseData);
     }
 }
+
 const signinUser = async (req, res) => {
-    if (!req.body.userName || !req.body.password || !req.body.mobileNo) {
-        let response = {
+    if (!req.body.userName || !req.body.password ) {
+        let responseData = {
             statusCode: 401,
-            message: 'params required: userName, password, mobileNo'
+            message: 'params required: userName, password'
         }
-        res.json(response);
+        res.json(responseData);
     }
 
     try {
         const userData = await authUser.findOne({ userName: req.body.userName })
         if (!userData) {
-
-            let response = {
+            let responseData = {
                 statusCode: 401,
                 message: 'User not found'
             }
-            res.json(response);
+            res.json(responseData);
         }
-        const pass =  await bcrypt.compare(req.body.password, userData.password);
-         if (!pass) {
-            let response = {
+        const pass = await bcrypt.compare(req.body.password, userData.password);
+        if (!pass) {
+            let responseData = {
                 statusCode: 401,
                 message: 'Password not correct'
             }
-            res.json(response);
-         }
-         let user = {
+            res.json(responseData);
+        }
+        let user = {
             userName: userData.username,
             password: userData.password,
-            mobileNo: userData.mobileNo,
-         }
-         var token = await jwt.sign(user,process.env.PRIVATEKEY );
-          
-         if (token) {
-            let response = {
+        }
+        var token = await jwt.sign(user, process.env.PRIVATEKEY);
+          console.log(token)
+        if (token) {
+            let responseData = {
                 statusCode: 200,
                 message: 'User authenticated',
-                data : token
+                data: token
             }
-            res.json(response);
-         }
-
-
+            res.json(responseData);
+        }
     }
-
     catch (error) {
-        let response = {
+        let resp = {
             statusCode: 400,
             message: error
         }
-        res.json(response);
+        res.json(resp);
     }
+}
+
+const currentUser = async (req, res) => {
+    let responseData = {
+        statusCode: 200,
+        message: 'is user'
+    }
+    res.json(responseData);
 }
 
 
@@ -108,5 +103,6 @@ const signinUser = async (req, res) => {
 
 module.exports = {
     signupUser,
-    signinUser
+    signinUser,
+    currentUser
 }

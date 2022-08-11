@@ -9,10 +9,7 @@ export default function NavigationTab() {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/login">Login</Link>
-                </li>
-                <li>
-                    <Link to="/signup">Sign Up</Link>
+                    <Link to="/placeorder">Ordre</Link>
                 </li>
                 <li>
                     <Link to="/logout">Logout</Link>
