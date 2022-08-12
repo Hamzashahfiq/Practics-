@@ -11,7 +11,7 @@ export const styles = {
         margin: '20px',
         backgroundColor: 'white',
         padding: '15px 30px',
-        height: '350px',
+        height: '450px',
         width: '310px',
         borderRadius: '10px',
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
@@ -23,7 +23,7 @@ export const styles = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: '10px'
+        paddingTop: '20px'
     },
     innerDivText: {
         fontWeight: 'bold'
@@ -34,6 +34,11 @@ export const styles = {
     },
     loginLink:{
         textDecoration: 'none'
+    },
+    phoneInput:{
+        width:'300px',
+        margin:'10px 5px',
+        minHeight:'50px',
     }
 
 }
