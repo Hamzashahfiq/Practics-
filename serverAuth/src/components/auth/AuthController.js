@@ -4,10 +4,12 @@ const authUser = require('./AuthModel')
 
 
 const signupUser = async (req, res) => {
+
+console.log('userName', req.body.userName  )
     if (!req.body.userName || !req.body.password || !req.body.mobileNo) {
         let responseData = {
             statusCode: 401,
-            message: 'params required: userName, password, mobileNo'
+            message: 'params required: userName, password, mobileNo',
         }
         res.json(responseData);
     }

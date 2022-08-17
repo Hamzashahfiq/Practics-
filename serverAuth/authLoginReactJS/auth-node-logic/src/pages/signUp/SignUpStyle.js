@@ -38,7 +38,7 @@ export const styles = {
     phoneInput:{
         width:'300px',
         margin:'10px 5px',
-        minHeight:'50px',
+        minHeight: 55
     }
 
 }

@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { AddUser } from "../../store/AuthSlice"
+import { useDispatch } from "react-redux"
 
 const userData = {
     userName: '',
@@ -7,7 +9,9 @@ const userData = {
     address:''
 }
 export default function useSignUp() {
+    const dispatch = useDispatch()
     const [userDetail, setUserDetail] = useState(userData)
+    const [signUpLoading, setSignUpLoading]= useState(true)
     const statesHandler = (e) => {
         setUserDetail({ ...userDetail, [e.target.name]: e.target.value })
     }
@@ -16,10 +20,12 @@ export default function useSignUp() {
         if (!userDetail.userName ||!userDetail.password || !userDetail.mobileNo ||!userDetail.address){
             alert('First input all required data.')
         }
+        dispatch(AddUser({userDetail, setSignUpLoading}))
     }
     const phoneNoHandler = (value) =>{
         setUserDetail({ ...userDetail,mobileNo :value })
     }
+
 
   
     return (
@@ -27,7 +33,8 @@ export default function useSignUp() {
             userDetail,
             statesHandler,
             signUpHandler,
-            phoneNoHandler
+            phoneNoHandler,
+            signUpLoading
         }
     )
 }

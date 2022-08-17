@@ -7,19 +7,24 @@ import PlaceOrder from "../pages/placeOrder/PlaceOrder";
 import SignUp from "../pages/signUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import { useSelector } from "react-redux";
 
 
 export default function Routing() {
+    const isAllowed = useSelector((store) =>store.AuthSlice.isAllowed)
+    const isAllowed11 = useSelector((store) =>store.AuthSlice)
+    console.log('is a',isAllowed)
+    console.log('test',isAllowed11)
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route element={<PublicRoute isAllowed={false} />}>
+                <Route element={<PublicRoute isAllowed={isAllowed} />}>
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/logout" element={<Logout />} />
                 </Route>
-                <Route element={<PrivateRoute isAllowed={false} />}>
+                <Route element={<PrivateRoute isAllowed={isAllowed} />}>
                     <Route path="/placeorder" element={<PlaceOrder />} />
 
                 </Route>

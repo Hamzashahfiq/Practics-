@@ -5,16 +5,20 @@ import axios from 'axios'
 
 export const AddUser = createAsyncThunk(
     'auth/AddUser',
-    async () => {
-        try{
-             const response = await axios.post(`http://localhost:5000/auth/addUser/`)
-            console.log(response.data)
+    async ({ userDetail, setSignUpLoading }) => {
+        try {
+            setSignUpLoading(true)
+            console.log(userDetail)
+            const response = await axios.post(`http://localhost:5000/auth/signupUser`,userDetail )
+            console.log(response)
         }
-        catch(error){
-            console.log('error',error)
+        catch (error) {
+            console.log('error', error)
         }
-       
-        return null
+        finally {
+            setSignUpLoading(false)
+        }
+        return true
     }
 )
 
@@ -22,18 +26,19 @@ export const AddUser = createAsyncThunk(
 
 
 const initialState = {
-    isUser: true
+    isAllowed: false,
+    data:['dhjf', 'hdsjf']
 }
 
 export const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(AddUser.fulfilled, (state, action) => {
+          state.isAllowed = action.payload  
         })
     },
 })
