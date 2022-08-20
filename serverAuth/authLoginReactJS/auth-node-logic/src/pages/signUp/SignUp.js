@@ -40,7 +40,7 @@ export default function SignUp() {
           <InputField type='text' label='Address' name='address' value={userDetail.address} onChange={(e) => statesHandler(e)} />
             {
               signUpLoading?
-              <ProgressLoader  />:
+              <ProgressLoader size={26} customSx={{margin:'15px 0'}} />:
               <ComButton type='submit' bText='Sign Up' />
             }
           <Typography variant="body1" gutterBottom component="span">

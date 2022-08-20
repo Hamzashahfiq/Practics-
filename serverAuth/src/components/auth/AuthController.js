@@ -5,15 +5,20 @@ const authUser = require('./AuthModel')
 
 const signupUser = async (req, res) => {
 
-console.log('userName', req.body.userName  )
     if (!req.body.userName || !req.body.password || !req.body.mobileNo) {
         let responseData = {
-            statusCode: 401,
             message: 'params required: userName, password, mobileNo',
         }
-        res.json(responseData);
+        res.status(400).json(responseData);
     }
-
+    let data = await authUser.findOne({name: req.body.userName})
+    console.log({data})
+    if (data) {
+        let responseData = {
+            message: "User already created",
+        }
+        res.status(404).json(responseData);
+    }
     const saltRounds = 10;
     let pass = await bcrypt.hash(req.body.password, saltRounds);
     let addNewUser = {
@@ -26,20 +31,25 @@ console.log('userName', req.body.userName  )
     const newUser = new authUser(addNewUser)
 
     try {
+
         await newUser.save()
+        // let data = await newUser.findOne({userName: req.body.userName})
         let responseData = {
             statusCode: 200,
-            message: 'user added successfully'
+            message: 'user added successfully',
+            // data: data
         }
-        res.json(responseData);
+        
+        req.body.userName
+        res.status(200).json(responseData);
     }
     catch (error) {
         let responseData = {
-            statusCode: 400,
             message: error
         }
-        res.json(responseData);
+        res.status(404).json(responseData);
     }
+
 }
 
 const signinUser = async (req, res) => {

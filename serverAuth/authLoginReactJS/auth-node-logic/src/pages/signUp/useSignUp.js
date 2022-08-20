@@ -11,7 +11,7 @@ const userData = {
 export default function useSignUp() {
     const dispatch = useDispatch()
     const [userDetail, setUserDetail] = useState(userData)
-    const [signUpLoading, setSignUpLoading]= useState(true)
+    const [signUpLoading, setSignUpLoading]= useState(false)
     const statesHandler = (e) => {
         setUserDetail({ ...userDetail, [e.target.name]: e.target.value })
     }
@@ -20,7 +20,7 @@ export default function useSignUp() {
         if (!userDetail.userName ||!userDetail.password || !userDetail.mobileNo ||!userDetail.address){
             alert('First input all required data.')
         }
-        dispatch(AddUser({userDetail, setSignUpLoading}))
+        dispatch(AddUser({userDetail, setSignUpLoading,setUserDetail,userData}))
     }
     const phoneNoHandler = (value) =>{
         setUserDetail({ ...userDetail,mobileNo :value })
