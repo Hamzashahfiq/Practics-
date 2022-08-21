@@ -10,14 +10,15 @@ const signupUser = async (req, res) => {
             message: 'params required: userName, password, mobileNo',
         }
         res.status(400).json(responseData);
+        return;
     }
     let data = await authUser.findOne({name: req.body.userName})
-    console.log({data})
     if (data) {
         let responseData = {
-            message: "User already created",
+            message: "User already exist",
         }
         res.status(404).json(responseData);
+        return;
     }
     const saltRounds = 10;
     let pass = await bcrypt.hash(req.body.password, saltRounds);
@@ -32,12 +33,11 @@ const signupUser = async (req, res) => {
 
     try {
 
-        await newUser.save()
-        // let data = await newUser.findOne({userName: req.body.userName})
+        const userData = await newUser.save()
         let responseData = {
             statusCode: 200,
-            message: 'user added successfully',
-            // data: data
+            message: 'U ser has been created successfully',
+            data: userData
         }
         
         req.body.userName
@@ -55,59 +55,57 @@ const signupUser = async (req, res) => {
 const signinUser = async (req, res) => {
     if (!req.body.userName || !req.body.password ) {
         let responseData = {
-            statusCode: 401,
             message: 'params required: userName, password'
         }
-        res.json(responseData);
+        res.status(400).json(responseData);
+        return;
     }
 
     try {
-        const userData = await authUser.findOne({ userName: req.body.userName })
+        const userData = await authUser.findOne({ name: req.body.userName })
+        console.log(userData)
         if (!userData) {
             let responseData = {
-                statusCode: 401,
                 message: 'User not found'
             }
-            res.json(responseData);
+            res.status(401).json(responseData);
+            return;
         }
         const pass = await bcrypt.compare(req.body.password, userData.password);
         if (!pass) {
             let responseData = {
-                statusCode: 401,
-                message: 'Password not correct'
+                message: 'Password is incorrect'
             }
-            res.json(responseData);
+            res.status(400).json(responseData);
+            return;
         }
         let user = {
             userName: userData.username,
             password: userData.password,
         }
         var token = await jwt.sign(user, process.env.PRIVATEKEY);
-          console.log(token)
         if (token) {
             let responseData = {
                 statusCode: 200,
                 message: 'User authenticated',
                 data: token
             }
-            res.json(responseData);
+            res.status(200).json(responseData);
         }
     }
     catch (error) {
         let resp = {
-            statusCode: 400,
             message: error
         }
-        res.json(resp);
+        res.status(400).json(resp);
     }
 }
 
 const currentUser = async (req, res) => {
     let responseData = {
-        statusCode: 200,
-        message: 'is user'
+        message: 'User is Login'
     }
-    res.json(responseData);
+    res.status(200).json(responseData);
 }
 
 

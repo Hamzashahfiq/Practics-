@@ -18,7 +18,8 @@ export default function useSignUp() {
     const signUpHandler = (e) =>{
         e.preventDefault();
         if (!userDetail.userName ||!userDetail.password || !userDetail.mobileNo ||!userDetail.address){
-            alert('First input all required data.')
+            alert('Required all input data first');
+            return;
         }
         dispatch(AddUser({userDetail, setSignUpLoading,setUserDetail,userData}))
     }

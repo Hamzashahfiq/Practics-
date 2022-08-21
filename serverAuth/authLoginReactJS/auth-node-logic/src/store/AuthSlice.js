@@ -9,22 +9,57 @@ export const AddUser = createAsyncThunk(
         try {
             setSignUpLoading(true)
             const response = await axios.post(`http://localhost:5000/auth/signupUser`,userDetail )
-            console.log(response)
-            // if(response.statuscode === 200){
-                alert('User Has been created')
+                alert(response?.data?.message)
                 setUserDetail(userData)
                 return response.data
-            // }
-            // else {
-            //     alert(response.statuscode+'-'+ response.massage)
-            // }
         }
         catch (error) {
-            alert( error.message)
+            alert( error?.response?.data?.message)
             console.log({error})
         }
         finally {
             setSignUpLoading(false)
+        }
+     
+    }
+)
+export const LoginUser = createAsyncThunk(
+    'auth/LoginUser',
+    async ({userDetail, setLoginLoading,setUserDetail,userData}) => {
+        try {
+            setLoginLoading(true)
+            const response = await axios.post(`http://localhost:5000/auth/signinUser`,userDetail )
+               console.log(response)
+               window.localStorage.setItem('token', response?.data);
+                alert(response?.data?.message)
+                setUserDetail(userData)
+                return {data:response?.data, isAllowed:true};
+        }
+        catch (error) {
+            alert( error?.response?.data?.message)
+            console.log({error})
+        }
+        finally {
+            setLoginLoading(false)
+        }
+     
+    }
+)
+export const CurrentUser = createAsyncThunk(
+    'auth/CurrentUser',
+    async ({setCurrentUserLoading}) => {
+        try {
+            setCurrentUserLoading(true)
+            let token  = window.localStorage.getItem(token);
+            const response = await axios.post(`http://localhost:5000/auth/currentUser`,{token})
+               console.log(response)
+                return true;
+        }
+        catch (error) {
+            console.log({error})
+        }
+        finally {
+            setCurrentUserLoading(false)
         }
      
     }
@@ -35,7 +70,7 @@ export const AddUser = createAsyncThunk(
 
 const initialState = {
     isAllowed: false,
-    data:['dhjf', 'hdsjf']
+    data:''
 }
 
 export const AuthSlice = createSlice({
@@ -47,6 +82,15 @@ export const AuthSlice = createSlice({
         // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(AddUser.fulfilled, (state, action) => {
             state.data = action.payload;
+        })
+        builder.addCase(LoginUser.fulfilled, (state, action) => {
+            state.data = action.payload.data;
+            state.isAllowed = action.payload.isAllowed
+
+        })
+        builder.addCase(CurrentUser.fulfilled, (state, action) => {
+            state.isAllowed = action.payload
+
         })
     },
 })

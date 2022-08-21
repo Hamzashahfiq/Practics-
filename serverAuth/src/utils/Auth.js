@@ -4,29 +4,28 @@ const auth = async (req, res,next) => {
     try {
       var token = req.headers.token
       if (!token) {
-        let response = {
-            status: 200,
+        let responseData = {
             message: "token not found",
           };
-          res.json(response);
+          res.status(400).json(responseData);
+          return;
       }
       var decoded = await jwt.verify(token, process.env.PRIVATEKEY);
       console.log("decoded",decoded, );
       if (!decoded) {
           let result = {
-            status: 200,
             message: "user is not authenticated",
           };
-          res.json(result);
+          res.status(401).json(result);
+          return;
         }
       next()
     } catch (error) {
         console.log("error",error);
-      let response = {
-        status: 400,
+      let responseData = {
         message: error,
       };
-      res.json(response);
+      res.status(404).json(responseData);
     }
   };
   

@@ -5,9 +5,11 @@ import Box from '@mui/material/Box';
 import InputField from '../../commonComponents/InputField';
 import ComButton from '../../commonComponents/ComButton';
 import { Link } from 'react-router-dom';
-
+import useLogin from './useLogin';
+import ProgressLoader from '../../commonComponents/progressLoader/ProgressLoader';
 
 export default function Login() {
+  const {userDetail,statesHandler,LoginHandler,loginLoading } = useLogin()
   return (
     <div style={styles.mainDiv}>
       <div style={styles.innerDiv}>
@@ -16,15 +18,19 @@ export default function Login() {
         </Typography>
         <Box
           component="form"
-          noValidate
+          onSubmit={LoginHandler}
           autoComplete="off"
           style={styles.form}
-          // method="post"
+        // method="post"
         >
-         <InputField type='text' label='User Name' name='userName' />
-         <InputField type='password' label='Password' name='password' />
-         <ComButton type='submit' bText='Login' />
-         <Typography variant="body1" gutterBottom component="span">
+          <InputField type='text' value = {userDetail.userName} onChange={(e)=>statesHandler(e)}  label='User Name' name='userName' />
+          <InputField type='password' value = {userDetail.password} onChange={(e)=>statesHandler(e)}  label='Password' name='password' />
+          {
+              loginLoading?
+              <ProgressLoader size={26} customSx={{margin:'15px 0'}} />:
+              <ComButton type='submit' bText='Login' />
+            }
+          <Typography variant="body1" gutterBottom component="span">
             Not have an account? <Typography component="span" style={styles.loginLinkText}>
               <Link to="/signup" style={styles.loginLink}>Sign Up</Link> </Typography>
           </Typography>
