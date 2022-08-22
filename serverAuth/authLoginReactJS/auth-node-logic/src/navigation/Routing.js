@@ -8,15 +8,14 @@ import SignUp from "../pages/signUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import { useSelector } from "react-redux";
+import CommonHeader from "../commonComponents/commonHeader/CommonHeader";
 
 
 export default function Routing() {
-    const isAllowed = useSelector((store) =>store.AuthSlice.isAllowed)
-    const isAllowed11 = useSelector((store) =>store.AuthSlice)
-    console.log('is a',isAllowed)
-    console.log('test',isAllowed11)
+    const isAllowed = useSelector((store) => store.AuthSlice.isAllowed)
     return (
         <BrowserRouter>
+            <CommonHeader />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route element={<PublicRoute isAllowed={isAllowed} />}>

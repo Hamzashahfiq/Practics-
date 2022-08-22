@@ -11,9 +11,6 @@ export default function NavigationTab() {
                 <li>
                     <Link to="/placeorder">Ordre</Link>
                 </li>
-                <li>
-                    <Link to="/logout">Logout</Link>
-                </li>
             </ul>
         </div>
     )

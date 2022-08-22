@@ -3,6 +3,7 @@ var jwt = require("jsonwebtoken");
 const auth = async (req, res,next) => {
     try {
       var token = req.headers.token
+      console.log({token})
       if (!token) {
         let responseData = {
             message: "token not found",

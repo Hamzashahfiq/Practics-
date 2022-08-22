@@ -63,7 +63,6 @@ const signinUser = async (req, res) => {
 
     try {
         const userData = await authUser.findOne({ name: req.body.userName })
-        console.log(userData)
         if (!userData) {
             let responseData = {
                 message: 'User not found'
@@ -88,7 +87,7 @@ const signinUser = async (req, res) => {
             let responseData = {
                 statusCode: 200,
                 message: 'User authenticated',
-                data: token
+                token
             }
             res.status(200).json(responseData);
         }
