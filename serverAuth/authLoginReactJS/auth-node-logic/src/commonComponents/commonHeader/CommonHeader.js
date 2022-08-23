@@ -29,6 +29,7 @@ interface Props {
 
 export default function CommonHeader(props: Props) {
     const isAllowed = useSelector((store) => store.AuthSlice.isAllowed);
+    const { logoutLoading, LogoutHandler } = useCommonHeader()
     const drawerWidth = 240;
     let navTab;
     let navName;
@@ -39,7 +40,7 @@ export default function CommonHeader(props: Props) {
         navTab = 'Login';
         navName = '/login'
     }
-    const navItems = [{ name: 'Home', link: '/' }, { name: navTab, link: navName }];
+    const navItems = [{ name: 'Home', link: '/', func: null }, { name: navTab, link: navName, func: LogoutHandler }];
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -57,6 +58,7 @@ export default function CommonHeader(props: Props) {
                 {navItems.map((item, index) => (
                     <ListItem key={item.name} disablePadding>
                         <CH.HDLink to={item.link}
+                            onClick={item.func}
                             style={({ isActive }) =>
                                 isActive ? CH.activeStyle : undefined
                             } >
@@ -72,7 +74,7 @@ export default function CommonHeader(props: Props) {
 
     const container = window !== undefined ? () => window().document.body : undefined;
     return (
-        <Box sx={{ display: 'flex', position: 'fixed', width: '100%' }}>
+        <Box sx={{ display: 'flex', position: 'fixed', width: '100%',zIndex:'5000' }}>
             <AppBar component="nav" sx={{ backgroundColor: '#264653' }}>
                 <Toolbar>
                     <IconButton
@@ -94,7 +96,7 @@ export default function CommonHeader(props: Props) {
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
 
-                            <Button key={item.name} sx={{ color: '#fff' }}>
+                            <Button key={item.name} sx={{ color: '#fff' }} onClick={item.func}>
                                 <CH.HLink to={item.link}
                                     style={({ isActive }) =>
                                         isActive ? CH.activeStyle : undefined

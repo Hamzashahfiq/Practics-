@@ -6,14 +6,15 @@ export const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minWidth: 'fit-content'
+        minWidth: 'fit-content',
+        boxSizing:'border-box'
     },
     innerDiv: {
         margin: '20px',
         backgroundColor: 'white',
-        padding: '15px 30px',
+        padding: '10px 20px',
         height: '300px',
-        width: '310px',
+        width: '330px',
         borderRadius: '10px',
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
 

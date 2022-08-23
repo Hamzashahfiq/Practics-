@@ -1,6 +1,6 @@
 export const styles = {
     mainDiv: {
-        background: "linear-gradient(to right, #4ca1af, #c4e0e5)",
+        background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
@@ -12,7 +12,7 @@ export const styles = {
         backgroundColor: 'white',
         padding: '15px 30px',
         height: '450px',
-        width: '310px',
+        width: '330px',
         borderRadius: '10px',
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
 
