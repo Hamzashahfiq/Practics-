@@ -5,7 +5,6 @@ export const styles = {
         paddingRight: '30px',
     },
     productDiv:{
-        border: '1px solid',
         display: 'flex',
         flexDirection: 'column',
         padding: 2,

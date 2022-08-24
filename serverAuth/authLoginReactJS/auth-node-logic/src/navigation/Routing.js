@@ -10,6 +10,7 @@ import PublicRoute from "./PublicRoute";
 import { useSelector } from "react-redux";
 import CommonHeader from "../commonComponents/commonHeader/CommonHeader";
 import Product from "../pages/product/Product";
+import CartPage from "../pages/cartPage/CartPage";
 
 
 export default function Routing() {
@@ -20,6 +21,7 @@ export default function Routing() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/product" element={<Product />}/>
+                <Route path="/cart" element={<CartPage />}/>
                 <Route element={<PublicRoute isAllowed={isAllowed} />}>
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />

@@ -17,6 +17,7 @@ import ProgressLoader from '../progressLoader/ProgressLoader';
 import useCommonHeader from './useCommonHeader';
 import { Link } from "react-router-dom";
 import CH from './CommonHeaderStyle'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 
 interface Props {
@@ -74,9 +75,9 @@ export default function CommonHeader(props: Props) {
 
     const container = window !== undefined ? () => window().document.body : undefined;
     return (
-        <Box sx={{ display: 'flex', position: 'fixed', width: '100%',zIndex:'5000' }}>
-            <AppBar component="nav" sx={{ backgroundColor: '#264653' }}>
-                <Toolbar>
+        <Box sx={{ display: 'flex', position: 'fixed', width: '100%', zIndex: '5000' }}>
+            <AppBar component="nav" sx={{ backgroundColor: '#264653', }}>
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -89,7 +90,7 @@ export default function CommonHeader(props: Props) {
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
                         E-Store
                     </Typography>
@@ -103,6 +104,18 @@ export default function CommonHeader(props: Props) {
                                     } > {item.name} </CH.HLink>
                             </Button>
                         ))}
+                    </Box>
+                    <Box sx={{ display: 'inline-block' }}>
+
+                        <CH.HLink to='cart'
+                            style={({ isActive }) =>
+                                isActive ? CH.activeStyle : undefined
+                            } >
+                            {/* <IconButton aria-label="delete" sx={{ color: 'White' }}> */}
+                                <AddShoppingCartIcon />
+                            {/* </IconButton> */}
+                        </CH.HLink>
+
                     </Box>
                 </Toolbar>
             </AppBar>

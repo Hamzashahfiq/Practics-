@@ -26,7 +26,10 @@ export const styles = {
         paddingTop: '20px'
     },
     innerDivText: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom:'20px',
+        marginTop:'-4px',
+        marginLeft:'-8px'
     },
     loginLinkText:{
         fontWeight:'blod',

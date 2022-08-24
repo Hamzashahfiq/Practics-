@@ -11,6 +11,7 @@ import 'react-phone-input-2/lib/style.css'
 import ProgressLoader from '../../commonComponents/progressLoader/ProgressLoader';
 
 
+
 export default function SignUp() {
   const { userDetail, statesHandler, signUpHandler, phoneNoHandler,signUpLoading} = useSignUp()
   return (
