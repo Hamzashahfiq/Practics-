@@ -15,6 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 setupDB()
+app.use('/',(req,res)=>{
+  res.status(200).send("Welcome to Online Store");
+})
 app.use('/auth', AuthRouter)
 app.use('/product', AddProduct)
 
