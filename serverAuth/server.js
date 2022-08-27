@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 require('dotenv').config()
 
-const port = 5000
+const port = process.env.PORT || 5000
 const app = express();
 
 const AuthRouter  = require('./src/components/auth/AuthRoutes')
